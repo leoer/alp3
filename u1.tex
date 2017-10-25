@@ -1,0 +1,137 @@
+\documentclass[10pt,ngerman]{article}
+\usepackage[ngerman]{babel}
+\usepackage{listings}
+\usepackage[utf8]{inputenc}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{tikz}
+
+
+\usepackage{graphicx}
+\usepackage[top=1.2in, left=1.2in]{geometry}
+
+\begin{document}
+	\title{AlP3 - Übungsblatt 1}
+	\author{León Dirmeier}
+	\maketitle
+	
+	\renewcommand\thesubsection{(\alph{subsection})}
+	\definecolor{lightgreen}{rgb}{0.41,0.98,0.67}
+	\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+	\lstdefinestyle{code}{
+		numbers=right,
+		numberstyle=\tiny\color{blue},
+		keywordstyle=\color{magenta},
+		stringstyle=\color{red},
+		%showspaces=true,
+		backgroundcolor=\color{lightgreen},
+		breaklines=true               
+	}
+	%\pagecolor{magenta}
+	\lstset{style=code}
+
+	\section{Rekursionsgleichungen}
+	\subsection{}
+	Rekursive Form: $T(1)=0$ und $T(n)=\lceil T(\frac{n}{2}) \rceil + \lfloor T(\frac{n}{2})\rfloor + n$\\
+	Geschlossene Form: $T(n)=n*log_2(n)$\\\\
+	Die Rundungsklammern können also außer Acht gelassen werden.
+	Angenommen $\forall n | n=2^i$, dann ist $(n+1) = 2*n$ \\
+	Die Rundungsklammern können also außer Acht gelassen werden.\\\\
+	\begin{proof}
+	
+	Induktionsanfang:\\
+	$T(1)=0$ und $T(1)=1*log_2(1)=0$\\\\
+	Induktionsschritt:\\
+	$T(n+1)=T(\frac{n+1}{2})+T(\frac{n+1}{2})+(n+1)$ und $T(n+1)=(n+1)log_2(n+1)$\\
+	$T(n+1)=T(n)+T(n)+(n+1)$ und $2n*log_2(2n)$\\
+	$T(n+1)=T(\frac{n+1}{2})+T(\frac{n+1}{2})+(n+1)$ und $2n*log_2(n)+2n*log_2(2)$\\
+	$T(n+1)=T(\frac{n+1}{2})+T(\frac{n+1}{2})+(n+1)$ und $2n*log_2(n)+(n+1)$\\\\
+	Einsetzen der Induktionsvoraussetzung $IV$:\\
+	$T(n+1)=2*IV+(n+1)$ und $T(n+1)=2*IV+(n+1)$\\	
+	\end{proof}
+	
+	\subsection{}
+	Rekursive Form: $S(1)=1$ und $S(n)=\sum_{i=1}^{n-1}i*S(i)$\\
+	Geschlossene Form: $\lceil \frac{n!}{2}\rceil$
+	\\Die Klammern sind wegen S(1) und S(2) nötig.
+	\\\\
+	\begin{proof}
+	
+	Induktionsanfang:\\
+		$S(1)=1$ und $S(1)=\lceil \frac{1!}{2} \rceil = \lceil \frac{1}{2} \rceil = 1$\\	
+	 $S(2)=\sum_{i=1}^{1}i*S(1)=1*S(1)=1$ und $S(2)=\lceil \frac{2!}{2} \rceil=1$\\\\
+	 Induktionsschritt:\\
+	 $S(n+1)=\sum_{i=1}^{n}i*S(i)$ und $S(n+1)=\lceil \frac{(n+1)!}{2}\rceil$\\\\
+	 Die Aufrundungsklammern werden ab jetzt der Einfachheit halber weggelassen, da sie nur für den S(1)-Fall wichtig sind.\\
+	 $S(n+1)=\sum_{i=1}^{n-1}i*S(i)+\sum_{i=n}^{n}i*S(i)$ und $S(n+1)=(n+1)* \frac{n!}{2}$\\
+	 $S(n+1)=\sum_{i=1}^{n-1}i*S(i)+n*S(n)$ und $S(n+1)=1* \frac{n!}{2}+n* \frac{n!}{2}$\\\\
+	 Einsetzen der Induktionsvoraussetzung $IV$:\\
+	 $S(n+1)=IV+n*S(n)$ und $S(n+1)=IV+n*\frac{n!}{2}=IV+n*S(n)$
+	\end{proof}
+	\section{Die Ungleichung vom arithmetischen und geometrischen Mittel}
+	
+	\subsection{}
+	\begin{proof}
+	\[P(2)=x_1x_2 \leq (\frac{x_1+x_2}{2})^2\]
+	\[ \Longleftrightarrow4x_1x_2 \leq (x_1+x_2)^2\]
+	\[ \Longleftrightarrow4x_1x_2 \leq x_1^2-2x_1x_2+x_2^2\]
+	\[ \Longleftrightarrow2x_1x_2 \leq x_1^2+x_2^2\]
+	\[\Longleftrightarrow0 \leq x_1^2-2x_1x_2+x_2^2\]
+	\[\Longleftrightarrow0 \leq (x_1-x_2)^2\]
+\end{proof}
+	\subsection{}
+	Wir können $x_n$ so wählen, dass der Wert der Klammer sich nicht ändert:
+	$$x_n=\frac{x_1+...+x_{n-1}}{n-1}$$\\
+	\begin{proof}
+	$$\frac{x_1+...+x_{n-1}}{n-1}=\frac{x_1+...+x_{n-1}+(\frac{x1+...+x_{n-1}}{n-1})}{n}$$\\
+	$$\frac{x_1+...+x_{n-1}}{n-1}=\frac{x1+...+x_{n-1}}{n}+\frac{x_1+...+x_{n-1}}{n(n-1)}$$\\
+	$$n*(x_1+...+x_{n-1})=(n-1)*(x_1+...+x_{n-1})+(x_1+...+x_{n-1})$$\\
+	$$n*(x_1+...+x_{n-1})=n*(x_1+...+x_{n-1})$$
+	\end{proof}
+	Nun der Beweis, dass \(P(n)\implies P(n-1)\)\\
+	\begin{proof}
+	\[P(n)=x_1...x_n \leq \frac{x_1+...+x_n}{n}^n\]
+	Den äquivalenten Term einsetzen:\\
+	\[P(n)=x_1...x_n \leq\frac{x_1+...+x_{n-1}}{n-1}^n\]\\
+	\[x_1...x_{n-1}x_n \leq \frac{x_1+...+x_{n-1}}{n-1}^{n-1}*\frac{x_1+...+x_{n-1}}{n-1}$$\\
+	$$x_1..x_{n-1} \leq \frac{x_1+...+x_{n-1}}{n-1}^{n-1}\] 
+	\end{proof}
+%	\subsection{}
+%	\begin{proof}
+%		\[P(2n)=P(n)P(n)\leq \frac{x_1+...+x_n+x_1+...+x_n}{2n}^{2n}\]
+%		\[P(n)P(n)\leq \frac{2(x_1+...+x_n}{2n})^{2n} \]
+%		\[P(n)P(n)\leq \frac{x_1+...+x_n}{n}^{2n} \]
+%		\[P(n)P(n)\leq \frac{x_1+...+x_n}{n}^n*\frac{x_1+...+x_n}{n}^n\]				
+%	\end{proof}
+	\subsection{}
+	\begin{proof}
+		\[P(2n)=(x_1...x_n)(x_{n+1}...x_{2n}) \leq \frac{x_1+...+x_{2n}}{2n}^{2n}\]
+		da gilt: \[(x_1..x_n) \leq \frac{x_1+...+x_n}{n}^n\]
+		setzen wir: \[(x_1...x_n)(x_{n+1}...x_{2n}) \leq \frac{x_1+...+x_n}{n}^n * \frac{x_{n+1}+...+x_{2n}}{n}^n\]
+		\[(x_1...x_n)(x_{n+1}...x_{2n}) \leq \frac{(x_1+...+x_n)(x_{n+1}+...+x_{2n})}{n^2}^n\]
+		aus P(2) folgt: \[(x_1+...+x_n)(x_{n+1}+...+x_{2n}) \leq \frac{x_1+...+x_{2n}}{2}^2 \]
+		dies wird eingesetzt in die Formel: \[(x_1...x_n)(x_{n+1}...x_{2n}) \leq(\dfrac{(\frac{x_1+...+x_{2n}}{2})^2}{n})^n \]
+		\[(x_1...x_n)(x_{n+1}...x_{2n}) \leq(\dfrac{(x_1+...+x{2n})^2}{n2^2})^n \]
+		\[(x_1...x_n)(x_{n+1}...x_{2n}) \leq \dfrac{x_1+...+x_{2n}}{2n}^{2n} \]
+		
+	\end{proof}
+	\subsection{}
+	\begin{proof}
+		Induktionsanfang: \[ P(1)=x_1 \leq \frac{x_1}{1}^1\]
+		\[P(1)=x_1 \leq x_1 \]
+		P(2) wurde in (b) bewiesen.\\
+		Für jedes n gibt es entweder eine Darstellung P(2k) oder P(2k+1).\\
+		Für P(2k+1) wenden wir (a) an und wandeln es in P(2k) um.\\
+		Nun wenden wir (c) Solange auf P(2n) an, bis 2k=2 ist.\\
+		Somit sind wir bei unserem Anker P(2) angekommen.
+		\end{proof}
+	\section{Manipulation elementarer Funktionen}
+	\[log(a^nb^n)=^{Produktregel}log(a)^n+log(b)^n=^{Potenzregel}n(log(a)+log(b))\]
+	\[b^{n(log(a)})=^{Basiswechsel}a^{n(log(b))}=^{Potenzregel}a^{log(b^n)}\]
+	\[\sqrt[b]{\frac{a^n}{b^m}}=^{Quotientenregel}\sqrt[b]{a^{n-m}}=^{Wurzelregel}a^{\frac{n-m}{b}}\]
+	\[log_a(n^{log_ba})=^{Potenzregel}log_b(a)log_a(n)=^{Basiswechsel}\frac{log_ka}{log_kb}*\frac{log_kn}{log_ka}=\frac{log_kn}{log_kb}=^{Basiswechsel}log_bn\]
+		
+\end{document}	
